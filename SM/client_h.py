@@ -60,22 +60,22 @@ def getRandomPositions(cliente:client):
 def createMatrix(line:bitarray):
   matrix = [line]
   for i in range(0,30):
-    a = str(bin(randint(0,1023)))[2:]
-    b = str(bin(randint(0,1023)))[2:]
-    c = str(bin(randint(0,1023)))[2:]
+    a = format(bin(randint(0,1023)), "010b")
+    b = format(bin(randint(0,1023)), "010b")
+    c = format(bin(randint(0,1023)), "010b")
     newLine = bitarray(a + b + c)
     matrix.append(newLine)
   return matrix
   
 
 casa = getRandomValues()
-#line = getRandomPositions(casa)
+line = getRandomPositions(casa)
 
 print('O cliente ' + casa.clientId + ' consumiu ' + casa.consumo + ' e vai pagar ' + casa.valorCompra + ' por esse consumo.')
 print('O cliente ' + str(int(casa.clientId, 2)) + ' consumiu ' + str(int(casa.consumo, 2)) + ' e vai pagar ' + str(int(casa.valorCompra, 2)) + ' por esse consumo.')
 
 #print (line)
 
-# matrix = createMatrix(line)
-# for i in range(len(matrix)):
-#   print(matrix[i])
+matrix = createMatrix(line)
+for i in range(len(matrix)):
+      print(matrix[i])
