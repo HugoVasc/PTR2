@@ -1,4 +1,5 @@
 from random import randint
+
 def binToString(number:int, size:int):
   if(not(isinstance(number, int))):
     print("variable is not a number")
@@ -22,20 +23,22 @@ def lfsr32 (seed):
 def lfsr16 (seed):
   state = seed
   newBit = (state ^ (state >> 1) ^ (state >> 3) ^ (state >> 12)  ) & 1
-  state = (state >> 1) | (newBit << 31)
+  state = (state >> 1) | (newBit << 15)
   return state
 
 def lfsr8 (seed):
   state = seed
   newBit = (state ^ (state >> 2) ^ (state >> 3) ^ (state >> 4)  ) & 1
-  state = (state >> 1) | (newBit << 31)
+  state = (state >> 1) | (newBit << 7)
   return state
 
 def lfsr4 (seed):
   state = seed
   newBit = (state ^ (state >> 1) ) & 1
-  state = (state >> 1) | (newBit << 31)
+  state = (state >> 1) | (newBit << 3)
   return state
+
+
 
 # first = seed = randint(0, (2^32)-1)
 # print(str(seed) + " is " + binToString(seed) + " in binary" + " and it's size is " + str(len(binToString(seed))))

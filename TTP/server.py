@@ -1,3 +1,13 @@
+
+
+# [] Criar matriz de lfsrs que irão criar a matriz K1 e K2
+# [] Gerar seeds com tamanho apropriado para cada lfsr
+# [] Criar as matrizes K1 e K2
+# [] Receber o dado do cliente
+# [] Gerar matriz P
+# [] Gerar matriz M1 a partir de P e K1
+# [] Fazer broadcast de M1
+
 import threading
 import socket
 
