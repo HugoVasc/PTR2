@@ -1,8 +1,8 @@
 
 
-# [] Criar matriz de lfsrs que irão criar a matriz K1 e K2
-# [] Gerar seeds com tamanho apropriado para cada lfsr
-# [] Criar as matrizes K1 e K2
+# [X] Criar matriz de lfsrs que irão criar a matriz K1 e K2
+# [X] Gerar seeds com tamanho apropriado para cada lfsr
+# [X] Criar as matrizes K1 e K2
 # [] Receber o dado do cliente
 # [] Gerar matriz P
 # [] Gerar matriz M1 a partir de P e K1
@@ -12,43 +12,44 @@ from operator import concat
 import threading
 import socket
 import lib
+import json
 
 clients = [] #lista de clientes
-
+LFSR_K1, Seeds_K1 = lib.SeedsAndTaps(5)
+LFSR_K2, Seeds_K2 = lib.SeedsAndTaps(5)
 def main():
 
+    slot = 0
 
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #objeto socket ipv4 e tcp
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 
     try:
-        server.bind(('192.168.43.225', 7777))  #vamos tentar fazer uma ligação com o host e a porta
-        server.listen() #poderia limitar o numero de conexoes exemplo server.listen(10) com 10 conexoes
+        server.bind(('localhost', 7777))  
+        server.listen() 
     except:
-        return print('\nNão foi possível iniciar o servidor!\n') #se der ruim na hora de escutar
+        return print('\nNão foi possível iniciar o servidor!\n') 
 
-    while True: #laco que aceita conexoes
+    while True: 
         client, addr = server.accept()
-        clients.append(client) #adicionando clientes na lista
+        clients.append(client) 
 
-        thread = threading.Thread(target=messagesTreatment, args=[client]) #vamos tratar de receber a mensagem de cada usuario
+        thread = threading.Thread(target=messagesTreatment, args=[client]) 
         thread.start()
-
-  
-LFSR, Seeds = lib.SeedsAndTaps(5)
-
-  
+        if(slot == 0): broadcastSlot0()
+        elif(slot == 96): slot = 0
+        else: slot += 1
 
 def messagesTreatment(client):
     while True:
         try:
-            msg = client.recv(2048) #recebo os bytes da msg 
+            msg = client.recv(2048) 
             print(msg)
             broadcast(msg,client)
         except:
             deleteClient(client)
             break
 
-def broadcast(msg, client): #funçao de broadcast
+def broadcast(msg, client): 
     for clientItem in clients:
         if clientItem != client:
             try:
@@ -56,8 +57,15 @@ def broadcast(msg, client): #funçao de broadcast
             except:
                 deleteClient(clientItem)
 
+def broadcastSlot0 ():
+    for clientItem in clients:
+        clientItem.send(LFSR_K1)
+        clientItem.send(Seeds_K1)
+        clientItem.send(LFSR_K2)
+        clientItem.send(Seeds_K2)
 
-def deleteClient(client): #se quiser deletar cliente
+
+def deleteClient(client): 
     clients.remove(client)
 
 main()

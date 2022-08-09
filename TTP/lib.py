@@ -1,4 +1,5 @@
 import random
+from tokenize import String
 
 n_clientes = 5
 
@@ -11,7 +12,12 @@ def binToString(number:int, size:int):
     bitString = (format(number, "0%db"%size))
     return bitString
 
-### Binary and String ###
+def stringToBinary(number:String):
+    number = '0b'+number
+    number = int(number,2)
+    return number
+
+#################################################
 
 ### LFSRs ###
 
@@ -45,7 +51,7 @@ def lfsr4 (seed):
   state = (state >> 1) | (newBit << 3)
   return state
 
-### LFSRs ###
+#################################################
 
 def getRandomLFSR (value:int):
     match value:
@@ -98,8 +104,8 @@ def SeedsAndTaps(n_clients):
         matrizSeed.append(seed)
     if(len(kn) > n_clientes):
         popped = kn.pop()
-        print('popped: ' + popped)
     return matrizLFSR, matrizSeed;
+#################################################
 
 def __MountaLinhaMatrizK (value:int, seed:int):
     match value:
@@ -129,26 +135,32 @@ def MontaMatrizK (matrizLFSR:list, matrizSeed:list):
 
 matrizLFSR, matrizSeed = SeedsAndTaps(n_clientes)
 
-#Teste
-k1_teste = MontaMatrizK(matrizLFSR, matrizSeed)
-k1_prova = MontaMatrizK(matrizLFSR, matrizSeed)
+#Testes
+# k1_teste = MontaMatrizK(matrizLFSR, matrizSeed)
+# k1_prova = MontaMatrizK(matrizLFSR, matrizSeed)
 
-print(k1_teste)
-print(k1_prova)
-print('\n')
-if (k1_teste == k1_prova):
-    print("Sucesso, K1 = K1 Prova\n")
-else:
-    print('\nFalha matrizes K1_teste e K1_prova divergem!!\n')
+# print(k1_teste)
+# print(k1_prova)
+# print('\n')
+# if (k1_teste == k1_prova):
+#     print("Sucesso, K1 = K1 Prova\n")
+# else:
+#     print('\nFalha matrizes K1_teste e K1_prova divergem!!\n')
 
 
-# Gerar P
-line = '01010011111010000000001101100010'
-posicao = random.randint(0,31)
-p = []
-for i in range(0,31):
-    if (i == posicao):
-        p.append(line)
-    else:
-        randomBit = random.randint(1,pow(2,32)-1)
-        p.append(binToString(randomBit, 32))
+# # Gerar P
+# line = '01010011111010000000001101100010'
+# posicao = random.randint(0,31)
+# p = []
+# for i in range(0,31):
+#     if (i == posicao):
+#         p.append(line)
+#     else:
+#         randomBit = random.randint(1,pow(2,32)-1)
+#         p.append(binToString(randomBit, 32))
+
+#Teste stringToBinary
+number = '1011'
+print (number)
+print(stringToBinary(number))
+
