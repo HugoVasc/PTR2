@@ -1,11 +1,9 @@
 #Build with docker build -t ttp-server .
 #Run with docker run ttp-server
-FROM python:3.11.0b3
+FROM python:3.11.0b5
 
-ADD main.py .
+ADD server.py .
 
 RUN python -m pip install --upgrade pip
 
-RUN pip install requests beautifulsoup4
-
-CMD ["python", "./main.py"]
+CMD ["python", "./server.py"]
