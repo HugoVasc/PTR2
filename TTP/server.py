@@ -8,8 +8,10 @@
 # [] Gerar matriz M1 a partir de P e K1
 # [] Fazer broadcast de M1
 
+from operator import concat
 import threading
 import socket
+import lib
 
 clients = [] #lista de clientes
 
@@ -19,7 +21,7 @@ def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #objeto socket ipv4 e tcp
 
     try:
-        server.bind(('localhost', 7777))  #vamos tentar fazer uma ligação com o host e a porta
+        server.bind(('192.168.43.225', 7777))  #vamos tentar fazer uma ligação com o host e a porta
         server.listen() #poderia limitar o numero de conexoes exemplo server.listen(10) com 10 conexoes
     except:
         return print('\nNão foi possível iniciar o servidor!\n') #se der ruim na hora de escutar
@@ -32,7 +34,7 @@ def main():
         thread.start()
 
   
-
+LFSR, Seeds = lib.SeedsAndTaps(5)
 
   
 
@@ -41,10 +43,10 @@ def messagesTreatment(client):
         try:
             msg = client.recv(2048) #recebo os bytes da msg 
             print(msg)
+            broadcast(msg,client)
         except:
             deleteClient(client)
             break
-
 
 def broadcast(msg, client): #funçao de broadcast
     for clientItem in clients:
