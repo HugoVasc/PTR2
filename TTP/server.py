@@ -8,11 +8,9 @@
 # [] Gerar matriz M1 a partir de P e K1
 # [] Fazer broadcast de M1
 
-from operator import concat
 import threading
 import socket
 import lib
-import json
 
 clients = [] #lista de clientes
 LFSR_K1, Seeds_K1 = lib.SeedsAndTaps(5)

@@ -1,7 +1,24 @@
 import threading
 import socket
+from random import randint
 
+class client:
+  clientId: 0b0
+  produtor: False;
+  consumo: 0b0
+  valorCompra: 0b0
+  producao: 0b0
+  valorVenda: 0b0
+  def __init__():
+    self.clientId = bin(randint(0,1023))
+    self.produtor = bool(randint(0,1))
+    self.consumo = bin(randint(0,1023))
+    self.valorCompra = bin(randint(0,1023))
+    self.producao = bin(randint(0,1023))
+    self.valorVenda = bin(randint(0,1023))
 
+client1 = client()
+print(client1)
 def main():
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
