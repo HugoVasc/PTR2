@@ -1,5 +1,3 @@
-
-
 # [X] Criar matriz de lfsrs que irão criar a matriz K1 e K2
 # [X] Gerar seeds com tamanho apropriado para cada lfsr
 # [X] Criar as matrizes K1 e K2
@@ -11,6 +9,8 @@
 import threading
 import socket
 import lib
+import time
+import datetime
 
 clients = [] #lista de clientes
 LFSR_K1, Seeds_K1 = lib.SeedsAndTaps(5)
@@ -36,6 +36,14 @@ def main():
         if(slot == 0): broadcastSlot0()
         elif(slot == 96): slot = 0
         else: slot += 1
+
+def countSlot():
+    totalSeconds = 15*60 #15minutos * 60 segundos
+    while(totalSeconds > 0):
+        timer = datetime.timedelta(seconds = total_seconds)
+        print(timer, end="\r")
+        time.sleep(1)
+        total_seconds -=1
 
 def messagesTreatment(client):
     while True:
