@@ -1,4 +1,5 @@
 import random
+import string
 from tokenize import String
 
 n_clientes = 5
@@ -51,7 +52,7 @@ def lfsr4 (seed):
   state = (state >> 1) | (newBit << 3)
   return state
 
-#################################################
+################ Matriz K #######################
 
 def getRandomLFSR (value:int):
     match value:
@@ -77,7 +78,7 @@ def getRandomLFSR (value:int):
             return binToString(line,64), seed, 64
         
 
-#Gerar matrizLFSR e matriz de Seeds
+########### Gerar matrizLFSR e matriz de Seeds #############
 def SeedsAndTaps(n_clients):
     x = n_clients * 32
     line = ''
@@ -135,6 +136,28 @@ def MontaMatrizK (matrizLFSR:list, matrizSeed:list):
 
 matrizLFSR, matrizSeed = SeedsAndTaps(n_clientes)
 
+################# Valida Ordem #######################
+def validaOrdem (bid:string): # Retorna True se a ordem é válida
+    bidType = bid[0] # 0 -> Venda; 1 -> Compra
+    bidDuration = bid[1]
+    price1 = bid[2:11]
+    price2 = bid[12:21]
+    quant = bid[22:31]
+    price1 = int(lib.stringToBinary(price1))
+    price2 = int(lib.stringToBinary(price2))
+    if(bidType == '0'):
+        if(price1 > price2):
+            return True
+        else:
+            return False
+    elif(bidType == '1'):
+        if(price1 < price2):
+            return True
+        else:
+            return False
+
+    
+
 #Testes
 # k1_teste = MontaMatrizK(matrizLFSR, matrizSeed)
 # k1_prova = MontaMatrizK(matrizLFSR, matrizSeed)
@@ -191,9 +214,3 @@ matrizLFSR, matrizSeed = SeedsAndTaps(n_clientes)
 #     newLine = bitarray(a + b + c)
 #     matrix.append(newLine)
 #   return matrix
-
-#Teste stringToBinary
-number = '1011'
-print (number)
-print(stringToBinary(number))
-
